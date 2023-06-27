@@ -2,7 +2,7 @@
 
 console.log("Duck, duck, goose.");
 
-// Get  HTML elements/images:
+// Get HTML elements/images:
 const resultsButton = document.getElementById("resultsButton");
 const image1 = document.getElementById("productImage1");
 const image2 = document.getElementById("productImage2");
@@ -38,7 +38,7 @@ function renderProducts() {
     product3 = getRandomNumber();
   }
 
-  // Source & alt attribtes:
+  // Source & alt attributes:
   image1.src = allProducts[product1].src;
   image2.src = allProducts[product2].src;
   image3.src = allProducts[product3].src;
@@ -74,7 +74,7 @@ function handleProductClick(event) {
   }
 }
 
-// Render the results on the page
+// Render (text) results on the page
 function renderResults() {
   let ul = document.querySelector("ul");
   for (let i = 0; i < allProducts.length; i++) {
@@ -82,29 +82,73 @@ function renderResults() {
     li.textContent = `${allProducts[i].name} had ${allProducts[i].views} views and was clicked ${allProducts[i].clicks} times.`;
     ul.appendChild(li);
   }
+
+  // Get a reference to the canvas element
+  const canvas = document.getElementById("chart");
+
+  // Create the bar chart using Chart.js
+  const ctx = canvas.getContext("2d");
+  const chart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: allProducts.map((product) => product.name), // Array of product names
+      datasets: [
+        {
+          label: "Votes",
+          data: allProducts.map((product) => product.clicks), // Array of vote totals
+          backgroundColor: "rgba(75, 192, 192, 0.8)", // Adjust the alpha value (last parameter) for transparency
+          borderColor: "rgba(75, 192, 192, 1)",
+          borderWidth: 1,
+        },
+        {
+          label: "Views",
+          data: allProducts.map((product) => product.views), // Array of view totals
+          backgroundColor: "rgba(255, 99, 132, 0.8)", // Adjust the alpha value (last parameter) for transparency
+          borderColor: "rgba(255, 99, 132, 1)",
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: {
+            display: true,
+          },
+        },
+      },
+      plugins: {
+        legend: {
+          display: true,
+        },
+      },
+    },
+  });
 }
 
 // Define the product names and image sources
 const productNames = [
-  "Product 1",
-  "Product 2",
-  "Product 3",
-  "Product 4",
-  "Product 5",
-  "Product 6",
-  "Product 7",
-  "Product 8",
-  "Product 9",
-  "Product 10",
-  "Product 11",
-  "Product 12",
-  "Product 13",
-  "Product 14",
-  "Product 15",
-  "Product 16",
-  "Product 17",
-  "Product 18",
-  "Product 19"
+  "R2D2 Luggage",
+  "Banana Slicer",
+  "Ipad Stand",
+  "Toeless Wellies",
+  "Breakfast Machine",
+  "Meatball Bubblegum",
+  "Hump Chair",
+  "Cthulhu",
+  "Dog Beak",
+  "Dragon Meat",
+  "Cutlery Pens",
+  "Pet Maid",
+  "Pizza Scissors",
+  "Shark Sleeping Bag",
+  "Baby Maid",
+  "Tauntaun Sleeper",
+  "Unicorn Meat",
+  "Water Can",
+  "Wine Glass",
 ];
 
 const imageSources = [
