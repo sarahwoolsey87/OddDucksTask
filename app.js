@@ -9,9 +9,15 @@ const image2 = document.getElementById("productImage2");
 const image3 = document.getElementById("productImage3");
 
 let clicks = 0;
-const maxClicksAllowed = 5;
+const maxClicksAllowed = 25;
 
 let allProducts = [];
+
+// Lab 13 Retrieve the data from local storage
+const storedProducts = localStorage.getItem('products');
+if (storedProducts) {
+  allProducts = JSON.parse(storedProducts);
+}
 
 function getRandomNumber() {
   return Math.floor(Math.random() * allProducts.length);
@@ -54,6 +60,7 @@ function renderProducts() {
 function handleProductClick(event) {
   if (event.target === productContainer) {
     alert("Click One!");
+    
   } else {
     clicks++;
     let clickedProduct = event.target.alt;
@@ -63,6 +70,10 @@ function handleProductClick(event) {
         break;
       }
     }
+    
+    // Lab 13 Save the updated data to local storage
+    localStorage.setItem('products', JSON.stringify(allProducts));
+
     if (clicks === maxClicksAllowed) {
       productContainer.removeEventListener("click", handleProductClick);
       productContainer.className = "no-voting";
